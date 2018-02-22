@@ -186,3 +186,47 @@ DEPENDENCIES
 
 BUNDLED WITH
    1.14.4
+
+
+package org.multicampus;
+
+import java.sql.*;
+
+public class JDBC_Test {
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		String driver = "oracle.jdbc.driver.OracleDriver";
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String userid = "n1";
+		String passwd = "n1";
+		Class.forName(driver);
+		PreparedStatement pstm = null;
+		ResultSet  rs = null;
+		
+		Connection con = DriverManager.getConnection(url, userid, passwd);
+		System.out.println("접속이 성공하였습니다.");
+		String quary = "SELECT * FROM INSPECTORS";
+		System.out.println(quary);
+		pstm = con.prepareStatement(quary);
+		rs = pstm.executeQuery();
+		
+		System.out.println("데이터를 받았습니다");
+		System.out.println("ID          " + "PWD          "+"NAME       "+"PHONE      ");
+		System.out.println("==========================================");
+		
+		while(rs.next()) {
+			String id = rs.getString("id")+"  ";
+			String pwd = rs.getString("pwd")+"   " ;
+			String name = rs.getString("name") +  "       ";
+			String phone = rs.getString("phone");
+			
+			String result = id+ pwd + name + phone;
+			System.out.println(result);
+		}
+
+	}
+
+}
+
+
